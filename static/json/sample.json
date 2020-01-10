@@ -1,1 +1,0 @@
-data = '[{"pt": "test1", "dept": "cardiology", "age": 20, "sms": 1, "apdt": "2019-12-16", "scdt": "2019-12-24", "pred": 32.11},{"pt": "test2","dept": "orthopedics", "age": 20, "sms": 2, "apdt": "2019-12-16", "scdt": "2019-12-31", "pred": 29.9},{"pt": "test3","dept": "orthopedics", "age": 20, "sms": 2, "apdt": "2019-12-16", "scdt": "2019-12-20", "pred": 59.9}]';
