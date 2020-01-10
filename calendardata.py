@@ -12,7 +12,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def event_calender():
 	
 	base_dir = os.getcwd()
-	data_path = base_dir + '/static1/json/JSON_Data.json'
+	data_path = base_dir + '/static/json/JSON_Data.json'
 	df = pd.read_json(data_path)
 
 	today = datetime.datetime.today()
