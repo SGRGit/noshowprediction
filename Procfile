@@ -1,2 +1,1 @@
-web gunicorn app:app
-web gunicorn calendardata:app
+web gunicorn app:app calendardata:api
