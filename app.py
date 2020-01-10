@@ -5,8 +5,10 @@ import pickle
 from datetime import datetime
 import json
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 model = pickle.load(open('model.pkl', 'rb'))
 
 @app.route('/')
