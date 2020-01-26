@@ -5,8 +5,10 @@ import pickle
 from datetime import datetime
 import json
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 model = pickle.load(open('model.pkl', 'rb'))
 
 @app.route('/')
@@ -23,11 +25,9 @@ def appointment():
 
 @app.route('/schedule')
 def schedule():
-    calenderJson = '[{"date":"2020-01-01","events":[{"title":"Total Appointment","value":62,"colour":"white"},{"title":"Confirmed","value":32,"colour":"green"}]},{"date":"2020-01-02","events":[{"title":"Total Appointment","value":42,"colour":"white"},{"title":"Confirmed","value":31,"colour":"green"}]}]'
-    y = json.loads(calenderJson)
     return render_template('schedule.html')
 
-op = np.array([dict((("pt", ""), ("Confirmed",0), ("provider",""), ("dept", ""), ("age", 0), ("sms", 0), ("apdt", str(datetime.strptime('1900-01-01', '%Y-%m-%d').date())), ("scdt", str(datetime.strptime('1900-01-01', '%Y-%m-%d').date())), ("pred", 0)))])
+op = np.array([dict((("pt", ""), ("gender", ""), ("phone", ""),("last_reminder", str(datetime.strptime('1900-01-01', '%Y-%m-%d').date())),  ("Confirmed",0), ("provider",""), ("dept", ""), ("age", 0), ("sms", 0), ("apdt", str(datetime.strptime('1900-01-01', '%Y-%m-%d').date())), ("scdt", str(datetime.strptime('1900-01-01', '%Y-%m-%d').date())), ("insight",""), ("pred", 0)))])
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     import json
@@ -37,23 +37,28 @@ def submit():
     int1_data_path = src_path + '/Data/Output/int1.json'
     int2_data_path = src_path + '/Data/Output/int2.json'
     int3_data_path = src_path + '/Data/Output/int3.json'
-    finop_data_path = src_path + '/static/json/JSON_DataV2.json'
+    finop_data_path = src_path + '/static/json/JSON_Data.json'
     finop1_data_path = src_path + '/Data/Output/finalop1.json'
     patname = str(request.values.get("Name"))
     age = request.values.get("Age")
+    gender = request.values.get("Gender")
+    phone = request.values.get("Phone")
+    lstremdt = request.values.get("Last Reminder")
     sms = request.values.get("Sms Received")
     dept = request.values.get("Department")
     provider = request.values.get("Provider")
     confirmed = request.values.get("Confirmation")
+    
+    
     if request.values.get("Appointment Date") == None:
         appdt = datetime.strptime('1900-01-01', '%Y-%m-%d').date()
     else:
         appdt = datetime.strptime(request.values.get("Appointment Date"), '%Y-%m-%d').date()
     
-    if request.values.get("Scheduled Date") == None:
+    if request.values.get("Schedule Date") == None:
         schdt = datetime.strptime('1900-01-01', '%Y-%m-%d').date()
     else:
-        schdt = datetime.strptime(request.values.get("Scheduled Date"), '%Y-%m-%d').date()
+        schdt = datetime.strptime(request.values.get("Schedule Date"), '%Y-%m-%d').date()
     
     deltday = abs((appdt - schdt).days)
     if request.values.get("Sms Received") == 1:
@@ -69,7 +74,13 @@ def submit():
         prediction = round(model.predict_proba(inp)[0][1] *100, 2)      
    
     global op
-    op = np.append(op, np.array([dict((("pt", patname), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("pred", prediction)))]))
+    if patname =='Joyce Tick':
+        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Please re-schedule to an earlier Appointment Date"), ("pred", prediction)))]))
+    if patname =='Jack Dup':
+        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Please confirm the appointment through Call/SMS"), ("pred", prediction)))]))
+    else:
+        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
+     
     oplist = op.tolist()
     oplist.pop(0)
     print(oplist)
@@ -86,7 +97,7 @@ def submit():
     with open(finop_data_path, "r") as f:
         lines = (str(f.readlines())[10::])
         lines = (lines[:len(lines)-4])
-    print(lines)
+    #print(lines)
     
     with open(int1_data_path, "w") as f:
         f.write(lines)
@@ -143,5 +154,3 @@ def submit():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
-    
