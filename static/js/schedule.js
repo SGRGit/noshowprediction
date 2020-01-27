@@ -12,7 +12,7 @@ var tableData = '';
               var CurDate = myobj[i].apdt;
               var CDate = new Date(CurDate);	
 
-              if (CurDate == '2020-02-04') {
+              if (CurDate == '2020-02-07') {
                 
                 tableData += '<tr>'; 
 
