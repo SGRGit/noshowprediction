@@ -116,9 +116,9 @@ var finalDateList = [];
         for(var i = 0; i < data.length; i++){
             dateList.push(data[i].date);
             appointmentsCount.push(data[i].event[0].value);
-            confirmedCounts.push(data[i].event[1].value);
-            noShowCount.push(data[i].event[2].value);
-            highProbCount.push(data[i].event[3].value);  
+            //confirmedCounts.push(data[i].event[1].value);
+            noShowCount.push(data[i].event[1].value);
+            highProbCount.push(data[i].event[2].value);  
 
             //appointmentsCount.push(Math.floor(Math.random() * 5) + 12);  
             //confirmedCount.push(Math.floor(Math.random() * 3) + 5);
