@@ -75,9 +75,9 @@ def submit():
    
     global op
     if patname =='Joyce Tick':
-        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Please re-schedule to an earlier Appointment Date"), ("pred", prediction)))]))
-    if patname =='Jack Dup':
-        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Please confirm the appointment through Call/SMS"), ("pred", prediction)))]))
+        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
+    elif patname =='Jack Dup':
+        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received"), ("pred", prediction)))]))
     else:
         op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
      
