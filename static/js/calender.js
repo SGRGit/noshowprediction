@@ -109,7 +109,7 @@ var highProbCount = [];
 var finalDateList = [];
 
     //var urls = 'http://localhost:7000/'
-    var urls = 'https://noshowcaldata.herokuapp.com';
+    var urls = 'https://noshowcaldata.herokuapp.com'
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
@@ -197,14 +197,15 @@ function weeklyGraph(){
                 data : appointmentsCount,
                 dashStyle: 'ShortDashDot',
                 color: '#33B8FF'
-            },{
-                name: 'Confirmed',
+            },//{
+              //  name: 'Confirmed',
                 //data: [0, 0, 5, 4, 0, 4],           
-                data : confirmedCounts,
-				dashStyle: 'ShortDashDot',
-                color: colors[2]
+              //  data : confirmedCounts,
+		//		dashStyle: 'ShortDashDot',
+                //color: colors[2]
                
-            },{
+            //},
+		{
                 name: 'Low Probability',
                 //data: [0, 0, 2, 5, 0, 3],           
                 data : noShowCount,
