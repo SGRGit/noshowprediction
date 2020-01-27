@@ -108,7 +108,8 @@ var noShowCount = [];
 var highProbCount = [];
 var finalDateList = [];
 
-    var urls = 'http://localhost:7000/'
+    //var urls = 'http://localhost:7000/'
+    var urls = 'https://noshowcaldata.herokuapp.com';
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
