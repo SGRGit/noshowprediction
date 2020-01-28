@@ -238,7 +238,7 @@ function weeklyGraph(){
                 //data: [0, 0, 9, 4, 0, 5],           
                 data : highProbCount,
                 dashStyle: 'ShortDashDot',
-                color: '#000'
+                color: '#8c8c8c'
             }
         ],
     }); 
