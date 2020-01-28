@@ -107,18 +107,40 @@ var confirmedCounts = [];
 var noShowCount = [];
 var highProbCount = [];
 var finalDateList = [];
-
+var test = 'Mon';
     //var urls = 'http://localhost:7000/'
-    var urls = 'https://noshowcaldata.herokuapp.com'
+	var urls = 'https://noshowcaldata.herokuapp.com'
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
         for(var i = 0; i < data.length; i++){
-            dateList.push(data[i].date);
+			var CurDate = data[i].date;
+			var jDate = new Date(CurDate);
+			var daysFormat = jDate.getDay();
+			var days = '';
+			  if (daysFormat == 0) {
+				days = 'Sun';
+			  }else if (daysFormat == 1) {
+				days = 'Mon';
+			  }else if (daysFormat == 2) {
+				days = 'Tue';
+			  }else if (daysFormat == 3) {
+				days = 'Wed';
+			  }else if (daysFormat == 4) {
+				days = 'Thu';
+			  }else if (daysFormat == 5) {
+				days = 'Fri';
+			  }else if (daysFormat == 6) {
+				days = 'Sat';
+			  }
+			
+			console.log(daysFormat+"-"+days);
+			
+            dateList.push(data[i].date.substr(5, 10)+" "+days);
             appointmentsCount.push(data[i].event[0].value);
             //confirmedCounts.push(data[i].event[1].value);
             noShowCount.push(data[i].event[1].value);
-            highProbCount.push(data[i].event[2].value);  
+            highProbCount.push(data[i].event[2].value)  
 
             //appointmentsCount.push(Math.floor(Math.random() * 5) + 12);  
             //confirmedCount.push(Math.floor(Math.random() * 3) + 5);
@@ -198,14 +220,14 @@ function weeklyGraph(){
                 dashStyle: 'ShortDashDot',
                 color: '#33B8FF'
             },//{
-              //  name: 'Confirmed',
+               // name: 'Confirmed',
                 //data: [0, 0, 5, 4, 0, 4],           
-              //  data : confirmedCounts,
-		//		dashStyle: 'ShortDashDot',
-                //color: colors[2]
+             //   data : confirmedCounts,
+			//	dashStyle: 'ShortDashDot',
+              //  color: colors[2]
                
             //},
-		{
+			{
                 name: 'Low Probability',
                 //data: [0, 0, 2, 5, 0, 3],           
                 data : noShowCount,
