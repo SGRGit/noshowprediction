@@ -187,20 +187,20 @@ def event_calender():
     diclist = list(dic)
     df = pd.DataFrame(diclist)
     df_new = pd.DataFrame()
-    df_new = df [['cd']]
-    df_new['intdt'] = df [['intdt']]
+    df_new = df [['pt']]
+    df_new['apdt'] = df [['apdt']]
     df_new['High'] = df [['High']]
     df_new['Lo'] = df [['Lo']]
     df_new['Cnf'] = df [['Cnf']]
 
 	#Calculate aggregate metrices
-    df_op = df_new.groupby(['intdt'])['High'].sum()
+    df_op = df_new.groupby(['apdt'])['High'].sum()
     df_op = df_op.to_frame()
-    df_op['Lo'] = df_new.groupby(['intdt'])['Lo'].sum()
-    df_op['Cnf'] = df_new.groupby(['intdt'])['Cnf'].sum()
-    df_op['Total'] = df_new.groupby(['intdt'])['cd'].count()
+    df_op['Lo'] = df_new.groupby(['apdt'])['Lo'].sum()
+    df_op['Cnf'] = df_new.groupby(['apdt'])['Cnf'].sum()
+    df_op['Total'] = df_new.groupby(['apdt'])['pt'].count()
     df_op = df_op.reset_index()
-    df_op = df_op.rename(columns={"intdt": "date"})
+    df_op = df_op.rename(columns={"apdt": "date"})
 
 	#Convert to Dictionary
     df_dict = df_op.to_dict('records')
@@ -233,7 +233,7 @@ def event_calender():
             }
         dlist.append(df_newdict.copy())
 
-    return(jsonify(dlist))   
+    return(jsonify(dlist))
 #@app.route('/refresh', methods=['GET', 'POST'])
 #def refresh():
 #    pyautogui.hotkey('ctrl', 'f5')
