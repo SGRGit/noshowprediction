@@ -37,8 +37,8 @@ function getData()
 { 
 	var url = 'http://calapi.inadiutorium.cz/api/v0/en/calendars/default/' + calendar.date.year + '/' + (+calendar.date.month+1); 
 	//var urls = JSON.parse(eventData);
-	var urls = 'https://noshowprediction-app.herokuapp.com/caldata'
-	//var urls = 'http://localhost:7000/'
+	var urls = 'https://noshowcaldata.herokuapp.com/caldata'
+	//var urls = 'http://localhost:5000/caldata'
 	fetch(urls)
 	.then(response => response.json())
 	.then((data) => {
@@ -105,12 +105,142 @@ function handleItemDoubleClick(sender, args)
 	// create and show the custom form
 	//var form = new CustomForm(sender, args.item, "edit");
 	//form.showForm();
-	console.log(sender.date.date);
+	
+	var day = args.item.startTime.day;
+	var month = args.item.startTime.month + 1;
+	var year = args.item.startTime.year;
+	if ((month < 10) && (day < 10)) {
+		clickDate = year+"-0"+month+"-0"+day
+	}else if ((month < 10) && (day >= 10)) {
+		clickDate = year+"-0"+month+"-"+day
+	}else if ((month >= 10) && (day < 10)) {
+		clickDate = year+"-"+month+"-0"+day
+	}else {
+		clickDate = year+"-"+month+"-"+day
+	}
+	
+	//localStorage.setItem("clickDate", year+"-"+month+"-"+day);
+	
+	localStorage.setItem("firstname", "");
 
+var myobj = JSON.parse(data);
+
+var today = new Date();
+var tableData = '';
+
+//var clickData = localStorage.getItem("clickDate");
+console.log("click date : "+clickDate);
+        for (var i = 0; i < myobj.length; i++){
+          if (myobj[i].dept == 'Cardiology') {                      
+
+              var CurDate = myobj[i].apdt;
+              var CDate = new Date(CurDate);	
+
+             if (CurDate == clickDate) {
+                
+                tableData += '<tr>'; 
+
+                 tableData += '<td>';
+                 tableData += myobj[i].pt;
+                 tableData += '</td>';
+
+                 
+
+                  /*if (myobj[i].provider == null || myobj[i].provider == undefined || myobj[i].provider == 'select') {
+                    tableData += '<td>';
+                    tableData += "";
+                    tableData += '</td>';
+                  }else{*/
+                  tableData += '<td>';
+                  tableData += myobj[i].provider;
+                  tableData += '</td>';
+                        
+
+                  tableData += '<td>';
+				  tableData += '<center>';
+                  tableData += myobj[i].age;
+				  tableData += '<center>';
+                  tableData += '</td>';
+                  tableData += '<td>';
+				  tableData += '<center>';
+                  tableData += myobj[i].gender;
+				  tableData += '<center>';
+                  tableData += '</td>';
+                  tableData += '<td>';
+                  tableData += myobj[i].phone;
+                  tableData += '</td>';
+                  tableData += '<td>';
+				  tableData += '<center>';
+                  tableData += myobj[i].scdt;
+				  tableData += '<center>';
+                  tableData += '</td>';
+                  tableData += '<td>';
+				  tableData += '<center>';
+                  tableData += myobj[i].apdt;
+				  tableData += '</center>';
+                  tableData += '</td>';        
+                  tableData += '<td>';
+				  tableData += '<center>';
+                  tableData += myobj[i].last_reminder
+				  tableData += '<center>';
+                  tableData += '</td>';
+				  if (myobj[i].Confirmed == "1") {
+                    tableData += '<td>';
+					tableData += '<center>';
+                    tableData += "Yes";
+					tableData += '<center>';
+                    tableData += '</td>';
+                  }else{
+                    tableData += '<td>';
+					tableData += '<center>';
+                    tableData += 'No';
+					tableData += '<center>';
+                    tableData += '</td>';
+                  } 
+                            
+                  if (myobj[i].pred > 50) {
+                    tableData += '<td style="color: green;">';
+					tableData += '<center>';
+                    tableData += myobj[i].pred;
+					tableData += '<center>';
+                    tableData += '</td>';
+                  }else{					  
+                    tableData += '<td style="color: red;">';
+					tableData += '<center>';
+                    tableData += myobj[i].pred;
+					tableData += '<center>';
+                    tableData += '</td>';
+                  }      
+				  if (myobj[i].pred < 50) {
+                  tableData += '<td>';
+                  tableData += myobj[i].insight;
+                  tableData += '</td>';
+				  }else{
+				  tableData += '<td>';
+                  tableData += '';
+                  tableData += '</td>';
+				  }
+                  tableData += '<td>';
+                  tableData += '<a href="#">SMS</a><br><a href="#">Call</a><br><a onclick="getId(this)" href="appointment">Reschedule</a>';
+                  tableData += '</td>';
+
+                tableData += '</tr>';
+              }              
+			      
+        }
+        document.getElementById('tableData').innerHTML = tableData;
+	}	
 	document.getElementById('foo').style.display = 'block';
 	document.getElementById('content').style.display = 'none';
 
 }
+
+var patientName = '';
+    function  getId(element) {
+        var rowNum = element.parentNode.parentNode.rowIndex - 1;
+        patientName = document.getElementById("tableData").rows[rowNum].cells[0].innerHTML;
+        localStorage.setItem("firstname", patientName);
+    }
 
 function handleSelectionEnd(sender, args)
 {
