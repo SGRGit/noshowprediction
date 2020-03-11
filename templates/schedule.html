@@ -5,7 +5,7 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>ShowNoShow</title>
+	<title>Patient Show/No-Show</title>
 	 <link rel="stylesheet" href="../static/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
@@ -62,7 +62,7 @@
           </button>
 
           <div style="margin-top: 20px;">
-            <h3>Day At A Glance</h3>  
+            <h3><b>Smart Patient Appointment Predictor</b></h3>  
           </div>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
@@ -99,19 +99,19 @@
             
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('dashboard')}}">
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title"><b>Dashboard</b></span>
                 <i style="padding-left: 10px" class="fa fa-home"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('schedule')}}">
-                <span class="menu-title">Schedule</span>
+                <span class="menu-title"><b>Daily Tracker</b></span>
                 <i style="padding-left: 10px" class="fa fa-calendar"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('appointment')}}">
-                <span class="menu-title">Schedule Appointment</span>
+                <span class="menu-title"><b>Schedule Appointment</b></span>
                 <i style="padding-left: 10px" class="fa fa-clipboard"></i>
               </a>              
             </li>            
@@ -124,7 +124,7 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                  <i class="fa fa-home"></i>
-                </span> Schedule Details 
+                </span> <b>Schedule Details</b>
               </h3>
           	</div>
             <div id="content" style="top: 120px; bottom: 2px;">
@@ -136,7 +136,7 @@
             <div id="foo" style="z-index: 100; align-items: center; display: none; margin: auto;">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title float-left">Appointment List</h4>
+                  <h4 class="card-title float-left"><b>Appointment List</b></h4>
                 </div>
                 <div class="card-body">
                   <div class="clearfix">
