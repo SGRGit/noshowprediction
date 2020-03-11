@@ -48,7 +48,7 @@ $(function () {
 
           if ($( "#department" ).val() == myobj[i].dept) {                         
 
-              var CurDate = myobj[i].scdt;
+              var CurDate = myobj[i].apdt;
               var CDate = new Date(CurDate);
               const diffTime = Math.abs(CDate - today);
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
