@@ -37,7 +37,7 @@ function getData()
 { 
 	var url = 'http://calapi.inadiutorium.cz/api/v0/en/calendars/default/' + calendar.date.year + '/' + (+calendar.date.month+1); 
 	//var urls = JSON.parse(eventData);
-	var urls = 'https://noshowcaldata.herokuapp.com/caldata'
+	var urls = 'https://noshowprediction-app.herokuapp.com/caldata'
 	//var urls = 'http://localhost:5000/caldata'
 	fetch(urls)
 	.then(response => response.json())
