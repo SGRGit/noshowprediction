@@ -108,8 +108,8 @@ var noShowCount = [];
 var highProbCount = [];
 var finalDateList = [];
 var test = 'Mon';
-    //var urls = 'http://localhost:7000/'
-	var urls = 'https://noshowprediction-app.herokuapp.com/caldata'
+    //var urls = 'http://localhost:5000/caldata'
+     var urls = 'https://noshowcaldata.herokuapp.com/caldata'
     fetch(urls)
     .then(response => response.json())
     .then((data) => {
@@ -163,7 +163,10 @@ function weeklyGraph(){
             backgroundColor: '#f2edf3',
         },
         title:{
-            text:'Monthly Trend of Appointments'
+            text:'Trend Chart of Appointments',
+			style: {
+                fontWeight: 'bold'
+            }
         },
         legend: {
             symbolWidth: 40,
@@ -172,13 +175,19 @@ function weeklyGraph(){
 
         yAxis: {
             title: {
-                text: 'Daily Count of Appointments'
+                text: 'Daily Count of Appointments',
+				style: {
+                fontWeight: 'bold'
+            }
             }
         },
 
         xAxis: {
             title: {
-                text: 'Appointment Date'
+                text: 'Appointment Date',
+				style: {
+                fontWeight: 'bold'
+            }
             },        
             categories: finalDateList
         },
@@ -238,7 +247,7 @@ function weeklyGraph(){
                 //data: [0, 0, 9, 4, 0, 5],           
                 data : highProbCount,
                 dashStyle: 'ShortDashDot',
-                color: '#8c8c8c'
+                color: '#000'
             }
         ],
     }); 
