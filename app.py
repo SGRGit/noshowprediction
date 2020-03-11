@@ -72,18 +72,32 @@ def submit():
         prediction = 0
     else:
         prediction = round(model.predict_proba(inp)[0][1] *100, 2)      
-   
+    
+    
     global op
-    if patname =='Joyce Tick':
-        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
-    elif patname =='Jack Dup':
-        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received"), ("pred", prediction)))]))
+  #  if patname =='Matt Innae':
+  #      op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))
+  #  elif patname =='Gene Jacket':
+  #      op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received"), ("pred", prediction)))]))
+  #  else:
+  #      op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
+    
+    
+    if prediction < 50 :
+       if confirmed == "1" and deltday >= 7 :
+            op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago"), ("pred", prediction)))]))       
+       elif confirmed == "0" and deltday < 7 :
+            op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Confirmation not received"), ("pred", prediction)))]))
+       elif confirmed == "0" and deltday >= 7 :
+            op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight", "Appointment booked long ago and Confirmation not received"), ("pred", prediction)))]))
     else:
-        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))
-     
+        op = np.append(op, np.array([dict((("pt", patname),("gender", gender), ("phone", phone),("last_reminder", str(lstremdt)), ("Confirmed", confirmed),("provider", provider), ("dept",dept), ("age", int(age)), ("sms", int(sms)), ("apdt", str(appdt)), ("scdt", str(schdt)), ("insight",""), ("pred", prediction)))]))    
+        
+       
+        
     oplist = op.tolist()
     oplist.pop(0)
-    print(oplist)
+    #print(oplist)
     srcdict = (dict(enumerate(oplist)))
     
     s = []
@@ -106,9 +120,9 @@ def submit():
     with open(int1_data_path, "r") as f:
         dataorg = json.load(f)
         f.close()
-    print(dataorg)
+   # print(dataorg)
     origdict = (dict(enumerate(dataorg)))
-    print(origdict)
+   # print(origdict)
     s1 = []
     for d in origdict.values():
         s1.append(d['pt'])
@@ -118,7 +132,7 @@ def submit():
             origdict[s1[i]] = origdict.pop(key)
     
     origdict.update(srcdict)
-    print(origdict)
+   # print(origdict)
   
     with open(int2_data_path, "w") as f:
         json.dump(origdict, f)
@@ -234,10 +248,6 @@ def event_calender():
         dlist.append(df_newdict.copy())
 
     return(jsonify(dlist))
-#@app.route('/refresh', methods=['GET', 'POST'])
-#def refresh():
-#    pyautogui.hotkey('ctrl', 'f5')
-#    return render_template('appointment.html')
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
