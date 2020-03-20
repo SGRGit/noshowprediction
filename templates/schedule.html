@@ -182,5 +182,22 @@
     <script src="../static/Holidays.js" type="text/javascript"></script>
     <script src="../static/CustomForm.js" type="text/javascript"></script>
     <script src="../static/js/schedule.js" type="text/javascript"></script>
+	</script>
+		<script type="text/javascript">
+		document.onkeydown = function (cc) {
+		if(cc.which == 85){
+		return false;
+		}
+		}
+	</script>
+	<script>jQuery(document).ready(function(){
+		jQuery(function() {
+        jQuery(this).bind("contextmenu", function(event) {
+            event.preventDefault();
+            alert('Right click disable in this site!!')
+        });
+		});
+		});
+	</script>
 </body>
 </html>
